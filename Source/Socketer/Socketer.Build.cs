@@ -4,7 +4,7 @@ using UnrealBuildTool;
 
 public class Socketer : ModuleRules
 {
-	public Socketer(ReadOnlyTargetInfo Target) : base(Target)
+	public Socketer(ReadOnlyTargetRules Target) : base(Target)
 	{
 		
 		PublicIncludePaths.AddRange(
