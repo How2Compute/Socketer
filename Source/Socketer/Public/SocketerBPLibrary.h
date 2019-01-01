@@ -1,4 +1,10 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+/* Copyright 2017-2019 HowToCompute. All Rights Reserved.
+* You may use, distribute and modify this code under the
+* terms of the MIT license.
+*
+* You should have received a copy of the MIT license with
+* this file. If not, please visit: https://github.com/How2Compute/Socketer
+*/
 
 #pragma once
 
@@ -10,39 +16,69 @@
 #include "SocketerBPLibrary.generated.h"
 
 /* 
-*	Function library class.
-*	Each function in it is expected to be static and represents blueprint node that can be called in any blueprint.
-*
-*	When declaring function you can define metadata for the node. Key function specifiers will be BlueprintPure and BlueprintCallable.
-*	BlueprintPure - means the function does not affect the owning object in any way and thus creates a node without Exec pins.
-*	BlueprintCallable - makes a function which can be executed in Blueprints - Thus it has Exec pins.
-*	DisplayName - full name of the node, shown when you mouse over the node and in the blueprint drop down menu.
-*				Its lets you name the node using characters not allowed in C++ function names.
-*	CompactNodeTitle - the word(s) that appear on the node.
-*	Keywords -	the list of keywords that helps you to find node when you search for it using Blueprint drop-down menu. 
-*				Good example is "Print String" node which you can find also by using keyword "log".
-*	Category -	the category your node will be under in the Blueprint drop-down menu.
-*
-*	For more info on custom blueprint nodes visit documentation:
-*	https://wiki.unrealengine.com/Custom_Blueprint_Node_Creation
+* TCP FSocket wrapper library for Unreal Engine 4.
+* 
+* NOTE: This is a near 1-on-1wrapper, so use it with caution.
+* You are fully responsible for closing sockets, and ensuring
+* that there is data to be read. Not doing so, can result in
+* undefined and unwanted behavior.
 */
 UCLASS()
 class USocketerBPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
+	/*
+	* Connect to a TCP server.
+	* 
+	* @param IP IP Address of the server you'd like to connect to. THIS MUST NOT BE A HOSTNAME!
+	* @param port The port your server applicatoin is listening on.
+	* 
+	* @param success True if a connection was correctly established, false otherwise.
+	*/
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Connect to a TCP server", Keywords = "Socketer connect tcp tcpconnect socketerconnect"), Category = "Networking|Socketer")
 	static USocket* Connect(FString IP, int32 port, bool &success);
 
+	/*
+	* Send a string over a TCP connection.
+	* 
+	* @Param Connection TCP socket connection to send the message over.
+	* @Param Message The string to send to the server.
+	*
+	* @return True if a message was successfully sent, false otherwise.
+	*/
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Send message to the server", Keywords = "Socketer send message tcpsend tcp tcpdisconnect socketersend"), Category = "Networking|Socketer")
 	static bool SendMessage(USocket* Connection, FString Message);
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get buffer (converted to FText) from server", Keywords = "Socketer send message tcpsend tcp tcpdisconnect socketersend"), Category = "Networking|Socketer")
+	
+	/*
+	* Receive a string from a TCP connection. WARNING: Game could hang till timeout if no data is available, please check using HasPendingData first.
+	*
+	* @Param Connection TCP socket connection to receive the message from.
+	* 
+	* @Param Message The received message
+	* @return True if a message was successfully received, false otherwise.
+	*/
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get buffer (converted to FString) from server", Keywords = "Socketer send message tcpsend tcp tcpdisconnect socketersend"), Category = "Networking|Socketer")
 	static bool GetMessage(USocket* Connection, FString &Message);
 
+	/*
+	* Checks if a TCP connection has any pending data.
+	*
+	* @Param Connection TCP socket connection to check.
+	*
+	* @Param Message The received message
+	* @return True if a message was successfully received, false otherwise.
+	*/
 	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (DisplayName = "HasPendingData", Keywords = "Socketer send message tcpsend tcp tcpdisconnect socketersend"), Category = "Networking|Socketer")
 	static bool HasPendingData(USocket* Connection);
 
+	/*
+	* Closes a TCP connection
+	*
+	* @Param Connection The TCP connection to close
+	* 
+	* @return True if the socket was successfully closed, false otherwise.
+	*/
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Close connection to TCP server", Keywords = "Socketer disconnect close tcpclose tcp tcpdisconnect socketerdisconnect"), Category = "Networking|Socketer")
 	static bool CloseConnection(USocket* Connection);
-
 };
