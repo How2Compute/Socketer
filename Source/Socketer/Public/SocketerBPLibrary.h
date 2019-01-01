@@ -31,9 +31,6 @@ class USocketerBPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Execute Sample function", Keywords = "Socketer sample test testing"), Category = "SocketerTesting")
-	static float SocketerSampleFunction(float Param);
-
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Connect to a TCP server", Keywords = "Socketer connect tcp tcpconnect socketerconnect"), Category = "Networking|Socketer")
 	static USocket* Connect(FString IP, int32 port, bool &success);
 

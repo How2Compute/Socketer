@@ -6,8 +6,15 @@ public class Socketer : ModuleRules
 {
 	public Socketer(ReadOnlyTargetRules Target) : base(Target)
 	{
-		
-		PublicIncludePaths.AddRange(
+        // Force IWYU to ensure the plugin will always be IWYU compliant
+        bEnforceIWYU = true;
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
+        // UE4.21 requirement
+        PrivatePCHHeaderFile = "Public/Socketer.h";
+
+
+        PublicIncludePaths.AddRange(
 			new string[] {
 				"Socketer/Public"
 				

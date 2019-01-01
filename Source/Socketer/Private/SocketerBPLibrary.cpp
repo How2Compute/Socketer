@@ -1,17 +1,12 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright HowToCompute. All Rights Reserved.
 
-#include "Socketer.h"
 #include "SocketerBPLibrary.h"
+#include "Socketer.h"
 
 USocketerBPLibrary::USocketerBPLibrary(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer)
 {
 
-}
-
-float USocketerBPLibrary::SocketerSampleFunction(float Param)
-{
-	return -1;
 }
 
 USocket* USocketerBPLibrary::Connect(FString IP, int32 port, bool& success)
