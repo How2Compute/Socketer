@@ -23,11 +23,11 @@ USocketerBPLibrary::USocketerBPLibrary(const FObjectInitializer& ObjectInitializ
 
 }
 
-USocket* USocketerBPLibrary::Connect(FString Host, int32 port, bool& bSuccessful)
+USocketerSocket* USocketerBPLibrary::Connect(FString Host, int32 port, bool& bSuccessful)
 {
 	// Create an FSocket pointer to work with and an USocke pointer to return.
 	FSocket* MySockTemp = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->CreateSocket(NAME_Stream, TEXT("Socketer TCP Socket"), false);
-	USocket* NetSock = NewObject<USocket>();
+	USocketerSocket* NetSock = NewObject<USocketerSocket>();
 
 	// Now attempt to parse (& resolve) up the passed in hostname or IP.
 	FAddressInfoResult LookupResult = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->GetAddressInfo(*Host, nullptr, EAddressInfoFlags::Default, NAME_None);
@@ -61,7 +61,7 @@ USocket* USocketerBPLibrary::Connect(FString Host, int32 port, bool& bSuccessful
 	return NetSock;
 }
 
-bool USocketerBPLibrary::SendMessage(USocket * Connection, FString Message)
+bool USocketerBPLibrary::SendMessage(USocketerSocket * Connection, FString Message)
 {
 	
 	// If the passed in socket is not valid
@@ -100,7 +100,7 @@ bool USocketerBPLibrary::SendMessage(USocket * Connection, FString Message)
 	}
 }
 
-bool USocketerBPLibrary::GetMessage(USocket* Connection, FString &Message)
+bool USocketerBPLibrary::GetMessage(USocketerSocket* Connection, FString &Message)
 {
 	// If the passed in socket is not valid
 	if (!IsValid(Connection))
@@ -153,7 +153,7 @@ bool USocketerBPLibrary::GetMessage(USocket* Connection, FString &Message)
 
 }
 
-bool USocketerBPLibrary::HasPendingData(USocket * Connection)
+bool USocketerBPLibrary::HasPendingData(USocketerSocket * Connection)
 {
 	// If the passed in socket is not valid
 	if (!IsValid(Connection))
@@ -177,7 +177,7 @@ bool USocketerBPLibrary::HasPendingData(USocket * Connection)
 	return MySocket->HasPendingData(Size);
 }
 
-bool USocketerBPLibrary::CloseConnection(USocket * Connection)
+bool USocketerBPLibrary::CloseConnection(USocketerSocket * Connection)
 {
 	// If the passed in socket is not valid
 	if (!IsValid(Connection))

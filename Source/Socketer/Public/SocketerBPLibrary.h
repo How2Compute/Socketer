@@ -45,7 +45,7 @@ class USocketerBPLibrary : public UBlueprintFunctionLibrary
 	* @param success True if a connection was correctly established, false otherwise.
 	*/
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Connect to a TCP server", Keywords = "Socketer connect tcp tcpconnect socketerconnect"), Category = "Networking|Socketer")
-	static USocket* Connect(FString Host, int32 port, bool &success);
+	static USocketerSocket* Connect(FString Host, int32 port, bool &success);
 
 	/*
 	* Send a string over a TCP connection.
@@ -56,7 +56,7 @@ class USocketerBPLibrary : public UBlueprintFunctionLibrary
 	* @return True if a message was successfully sent, false otherwise.
 	*/
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Send message to the server", Keywords = "Socketer send message tcpsend tcp tcpdisconnect socketersend"), Category = "Networking|Socketer")
-	static bool SendMessage(USocket* Connection, FString Message);
+	static bool SendMessage(USocketerSocket* Connection, FString Message);
 	
 	/*
 	* Receive a string from a TCP connection. WARNING: Game could hang till timeout if no data is available, please check using HasPendingData first.
@@ -67,7 +67,7 @@ class USocketerBPLibrary : public UBlueprintFunctionLibrary
 	* @return True if a message was successfully received, false otherwise.
 	*/
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get buffer (converted to FString) from server", Keywords = "Socketer send message tcpsend tcp tcpdisconnect socketersend"), Category = "Networking|Socketer")
-	static bool GetMessage(USocket* Connection, FString &Message);
+	static bool GetMessage(USocketerSocket* Connection, FString &Message);
 
 	/*
 	* Checks if a TCP connection has any pending data.
@@ -78,7 +78,7 @@ class USocketerBPLibrary : public UBlueprintFunctionLibrary
 	* @return True if a message was successfully received, false otherwise.
 	*/
 	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (DisplayName = "HasPendingData", Keywords = "Socketer send message tcpsend tcp tcpdisconnect socketersend"), Category = "Networking|Socketer")
-	static bool HasPendingData(USocket* Connection);
+	static bool HasPendingData(USocketerSocket* Connection);
 
 	/*
 	* Closes a TCP connection
@@ -88,5 +88,5 @@ class USocketerBPLibrary : public UBlueprintFunctionLibrary
 	* @return True if the socket was successfully closed, false otherwise.
 	*/
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Close connection to TCP server", Keywords = "Socketer disconnect close tcpclose tcp tcpdisconnect socketerdisconnect"), Category = "Networking|Socketer")
-	static bool CloseConnection(USocket* Connection);
+	static bool CloseConnection(USocketerSocket* Connection);
 };

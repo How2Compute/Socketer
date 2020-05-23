@@ -26,7 +26,7 @@
  * 
  */
 UCLASS(BlueprintType)
-class SOCKETER_API USocket : public UObject
+class SOCKETER_API USocketerSocket : public UObject
 {
 	GENERATED_BODY()
 public:

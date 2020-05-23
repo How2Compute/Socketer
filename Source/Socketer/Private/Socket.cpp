@@ -17,13 +17,13 @@
 #include "Socket.h"
 #include "Socketer.h"
 
-bool USocket::SetSocket(FSocket* Socket)
+bool USocketerSocket::SetSocket(FSocket* Socket)
 {
 	_Socket = Socket;
 	return false;
 }
 
-FSocket* USocket::GetSocket()
+FSocket* USocketerSocket::GetSocket()
 {
 	return _Socket;
 }
