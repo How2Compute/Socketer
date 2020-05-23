@@ -1,5 +1,5 @@
 # Socketer
-A TCP socket blueprint library for Unreal Engine 4 - NOW WITH SUPPORT FOR Unreal Engine 4.22!
+A TCP socket blueprint library for Unreal Engine 4 - NOW WITH SUPPORT FOR Unreal Engine 4.25!
 
 ## How do I install Socketer?
 To install Socketer, head to [releases](https://github.com/How2Compute/Socketer/releases), and download the latest (pre-compiled) copy for your engine version. Now head to where your engine is installed (likely C:/Program Files/Epic Games/UE_4.21), and open up Engine/Plugins. I recommend creating a folder to house downloaded plugins, so why not create one named "Downloaded"? Once you've created this folder, copy the Socketer-UExxx directory over from your zip file. Once you've done this, rename it to "Socketer", and you're set! You may need to restart Unreal Engine for the plugin to be detected.

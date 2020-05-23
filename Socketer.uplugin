@@ -1,7 +1,7 @@
 {
   "FileVersion": 3,
   "Version": 1,
-  "VersionName": "0.3",
+  "VersionName": "0.4",
   "FriendlyName": "Socketer",
   "Description": "An FSocket wrapper library for Blueprints. WARNING: This is an almost direct mapping, and the sockets are unmanaged, so use caution.",
   "Category": "Networking",
