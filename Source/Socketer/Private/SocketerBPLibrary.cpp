@@ -23,18 +23,24 @@ USocketerBPLibrary::USocketerBPLibrary(const FObjectInitializer& ObjectInitializ
 
 }
 
-USocket* USocketerBPLibrary::Connect(FString IP, int32 port, bool& success)
+USocket* USocketerBPLibrary::Connect(FString Host, int32 port, bool& bSuccessful)
 {
 	// Create an FSocket pointer to work with and an USocke pointer to return.
-	FSocket* MySockTemp = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->CreateSocket(NAME_Stream, TEXT("Socketer Managed TCP Socket"), false);
+	FSocket* MySockTemp = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->CreateSocket(NAME_Stream, TEXT("Socketer TCP Socket"), false);
 	USocket* NetSock = NewObject<USocket>();
 
-	// Create & set a variable to store the parsed ip address
-	FIPv4Address ipv4ip;
-	FIPv4Address::Parse(IP, ipv4ip);
+	// Now attempt to parse (& resolve) up the passed in hostname or IP.
+	FAddressInfoResult LookupResult = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->GetAddressInfo(*Host, nullptr, EAddressInfoFlags::Default, NAME_None);
+	if (LookupResult.ReturnCode != ESocketErrors::SE_NO_ERROR || LookupResult.Results.Num() < 1)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Unable to resolve host \"%s\"!"), *Host);
+		bSuccessful = false;
+		return nullptr;
+	}
 
-	// Now combine that with the port to create the address
-	TSharedRef<FInternetAddr> SockAddr = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->CreateInternetAddr(ipv4ip.Value, port);
+	// Lookup was a success! Grab the first result and use the passed in port
+	TSharedRef<FInternetAddr> SockAddr = LookupResult.Results[0].Address;
+	SockAddr->SetPort(port);
 
 	// Attempt to connect, and store if it succeeded in a variable
 	bool connected = MySockTemp->Connect(*SockAddr);
@@ -44,14 +50,14 @@ USocket* USocketerBPLibrary::Connect(FString IP, int32 port, bool& success)
 	{
 		// And if not log an error and return an error
 		UE_LOG(LogTemp, Error, TEXT("Could not connect"));
-		success = false;
+		bSuccessful = false;
 		return nullptr;
 	}
 
 	// Set the UObject wrappers its socket to the connected one
 	NetSock->SetSocket(MySockTemp);
 
-	success = true;
+	bSuccessful = true;
 	return NetSock;
 }
 

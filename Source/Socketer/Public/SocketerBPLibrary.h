@@ -39,13 +39,13 @@ class USocketerBPLibrary : public UBlueprintFunctionLibrary
 	/*
 	* Connect to a TCP server.
 	* 
-	* @param IP IP Address of the server you'd like to connect to. THIS MUST NOT BE A HOSTNAME!
+	* @param Host The host name or IP address of the server you'd like to connect to.
 	* @param port The port your server application is listening on.
 	* 
 	* @param success True if a connection was correctly established, false otherwise.
 	*/
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Connect to a TCP server", Keywords = "Socketer connect tcp tcpconnect socketerconnect"), Category = "Networking|Socketer")
-	static USocket* Connect(FString IP, int32 port, bool &success);
+	static USocket* Connect(FString Host, int32 port, bool &success);
 
 	/*
 	* Send a string over a TCP connection.
