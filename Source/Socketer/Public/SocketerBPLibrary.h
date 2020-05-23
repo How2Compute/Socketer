@@ -1,9 +1,17 @@
-/* Copyright 2017-2019 HowToCompute. All Rights Reserved.
+/* Copyright 2017-2020 HowToCompute. All Rights Reserved.
 * You may use, distribute and modify this code under the
 * terms of the MIT license.
 *
 * You should have received a copy of the MIT license with
-* this file. If not, please visit: https://github.com/How2Compute/Socketer
+* this file. If not, please visit: https://github.com/How2Compute/Socketer.
+*
+* This plugin provides a very simple, almost 1:1 mapping
+* between Unreal Engine's FSocket library and Blueprints.
+* For a more easy-to-use plugin, with support for SSL,
+* encryption, "managed" sockets, timely updates, premium
+* support and more please consider taking a look at our
+* commercial offering, NetShield:
+* https://www.unrealengine.com/marketplace/en-US/product/netshield
 */
 
 #pragma once
@@ -32,7 +40,7 @@ class USocketerBPLibrary : public UBlueprintFunctionLibrary
 	* Connect to a TCP server.
 	* 
 	* @param IP IP Address of the server you'd like to connect to. THIS MUST NOT BE A HOSTNAME!
-	* @param port The port your server applicatoin is listening on.
+	* @param port The port your server application is listening on.
 	* 
 	* @param success True if a connection was correctly established, false otherwise.
 	*/
