@@ -16,9 +16,9 @@
 
 #pragma once
 
-#include "Engine.h"
+#include "CoreMinimal.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "Socket.h"
-#include "Runtime/Networking/Public/Networking.h"
 #include "Runtime/Sockets/Public/Sockets.h"
 #include "Runtime/Sockets/Public/SocketSubsystem.h"
 #include "SocketerBPLibrary.generated.h"
