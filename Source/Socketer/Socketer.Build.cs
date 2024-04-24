@@ -21,11 +21,8 @@ public class Socketer : ModuleRules
 	public Socketer(ReadOnlyTargetRules Target) : base(Target)
 	{
         // Force IWYU to ensure the plugin will always be IWYU compliant
-        bEnforceIWYU = true;
+        IWYUSupport = IWYUSupport.Full;
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-
-        // UE4.21 requirement
-        PrivatePCHHeaderFile = "Public/Socketer.h";
         
 		PublicDependencyModuleNames.AddRange(
 			new string[]
